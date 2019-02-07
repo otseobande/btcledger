@@ -117,6 +117,7 @@
                   <th scope="col">Charges (&#8358;)</th>
                   <th scope="col">Value (&#8358;)</th>
                   <th scope="col">Date</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -128,6 +129,9 @@
                     <td>{{ $transaction->charges }}</td>
                     <td>{{ number_format($transaction->value, 2) }}</td>
                     <td>{{ \Carbon\Carbon::parse($transaction->created_at) }}</td>
+                    <td>
+                      <button class="btn btn-sm btn-danger" @click="handleDelete({{$transaction->id}})">Delete</button>
+                    </td>
                   </tr>
                 @endforeach
               </tbody>

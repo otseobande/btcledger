@@ -20,13 +20,13 @@ class TransactionController extends Controller
 
     public function index(Request $request)
     {
-        $transactions = Transaction::orderBy('created_at', 'desc')->paginate();
+        $transactions = Auth::user()->transactions()->orderBy('created_at', 'desc')->paginate();
 
-        $sells = Transaction::where('type', 'sell')->get()->map(function ($transaction) {
+        $sells = Auth::user()->transactions()->where('type', 'sell')->get()->map(function ($transaction) {
           return $transaction->value;
         })->sum();
 
-        $buys = Transaction::where('type', 'buy')->get()->map(function ($transaction) {
+        $buys = Auth::user()->transactions()->where('type', 'buy')->get()->map(function ($transaction) {
           return $transaction->value;
         })->sum();
 
@@ -46,5 +46,16 @@ class TransactionController extends Controller
         }
 
         return view('transaction', compact('transactions', 'profit', 'buys', 'sells'));
+    }
+
+    public function delete ($id) {
+      $transaction = Transaction::where([
+        ['user_id', Auth::id()],
+        ['id', $id]
+      ]);
+
+      $transaction->delete();
+
+      return back()->with('successMsg','Record deleted successfully');
     }
 }

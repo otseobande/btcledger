@@ -31,7 +31,7 @@ class User extends Authenticatable
     /**
      * Get user transactions
      */
-    public function comments()
+    public function transactions()
     {
         return $this->hasMany('App\Transaction');
     }

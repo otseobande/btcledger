@@ -45,5 +45,12 @@ const app = new Vue({
           this.rate = parseFloat(newValue / this.quantity).toFixed(2);
         }
       }
+    },
+    methods: {
+      handleDelete(id) {
+        if(confirm('Are you sure you want to delete record?')) {
+          window.location.href = `/transaction/${id}/delete`;
+        }
+      }
     }
 });

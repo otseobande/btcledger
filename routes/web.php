@@ -18,4 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/transaction', 'TransactionController@index')->name('transaction');
-Route::post('/transaction', 'TransactionController@index')->name('transaction');
+Route::post('/transaction', 'TransactionController@index');
+Route::get('/transaction/{id}/delete', 'TransactionController@delete');
