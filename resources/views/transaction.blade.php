@@ -111,11 +111,11 @@
             <table class="table table-sm">
               <thead>
                 <tr>
-                  <th scope="col">Rate (&#8358;)</th>
-                  <th scope="col">Quantity (BTC)</th>
+                  <th scope="col">Rate</th>
+                  <th scope="col">Quantity</th>
                   <th scope="col">Type</th>
-                  <th scope="col">Charges (&#8358;)</th>
-                  <th scope="col">Value (&#8358;)</th>
+                  <th scope="col">Charges</th>
+                  <th scope="col">Value</th>
                   <th scope="col">Date</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -123,11 +123,11 @@
               <tbody>
                 @foreach($transactions as $transaction)
                   <tr>
-                    <td>{{ number_format($transaction->rate) }}</td>
-                    <td>{{ $transaction->quantity }}</td>
+                    <td>&#8358;{{ number_format($transaction->rate) }}</td>
+                    <td>{{ $transaction->quantity }}BTC</td>
                     <td>{{ $transaction->type }}</td>
-                    <td>{{ $transaction->charges }}</td>
-                    <td>{{ number_format($transaction->value, 2) }}</td>
+                    <td>&#8358;{{ number_format($transaction->charges, 2) }}</td>
+                    <td>&#8358;{{ number_format($transaction->value, 2) }}</td>
                     <td>{{ \Carbon\Carbon::parse($transaction->created_at) }}</td>
                     <td>
                       <button class="btn btn-sm btn-danger" @click="handleDelete({{$transaction->id}})">Delete</button>
