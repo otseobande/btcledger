@@ -21,21 +21,39 @@
                       id="rate"
                       aria-describedby="rate"
                       placeholder="Enter rate"
+                      v-model="rate"
                       required
                     >
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">BTC Quantity</label>
-                    <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Enter BTC quantity" step="any" required>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="quantity"
+                      id="quantity"
+                      placeholder="Enter BTC quantity"
+                      step="any"
+                      v-model="quantity"
+                      required
+                    >
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Charges (&#8358;)</label>
                     <input type="number" class="form-control" name="charges" id="charges" placeholder="Enter Charge" value="0" step="any">
                   </div>
-                  <!-- <div class="form-group">
+                  <div class="form-group">
                     <label for="amount">Amount (&#8358;)</label>
-                    <input type="number" class="form-control" name="amount" id="amount"  value="0" step="any">
-                  </div> -->
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="amount"
+                      id="amount"
+                      value="0"
+                      step="any"
+                      v-model="amount"
+                    >
+                  </div>
                   <p>Transaction type</p>
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="type" id="buy-type" value="buy" required>
@@ -57,7 +75,7 @@
         </div>
     </div>
     <br>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" style="text-align: center;">
       <div class="col-md-3">
         <div class="card">
           <div class="card-body">

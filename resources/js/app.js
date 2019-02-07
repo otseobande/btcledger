@@ -30,12 +30,20 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    data: {
+      rate: 0,
+      quantity: 0
+    },
+    computed: {
+      amount: {
+        get: function() {
+          const amount = parseFloat(this.rate) * parseFloat(this.quantity) ;
+
+          return amount === Infinity ? 0 : amount.toFixed(2);
+        },
+        set: function(newValue) {
+          this.rate = parseFloat(newValue / this.quantity).toFixed(2);
+        }
+      }
+    }
 });
-
-$('#rate').on('change', function() {
-  const quantity = $('#quantity').val;
-
-  $('#amount').val = quantity * $(this).val;
-})
-
-console.log('test')
