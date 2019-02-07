@@ -22,6 +22,7 @@
                       aria-describedby="rate"
                       placeholder="Enter rate"
                       v-model="rate"
+                      step="any"
                       required
                     >
                   </div>
