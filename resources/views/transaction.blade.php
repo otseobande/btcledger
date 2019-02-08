@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="col-md-3">
-        <div class="card {{ $profit > 0 ? 'profit' : 'loss'}}">
+        <div class="card {{ $profit >= 0 ? 'profit' : 'loss'}}">
           <div class="card-body p-4">
             <h4>Profit</h4>
             &#8358;{{number_format($profit, 2)}}
