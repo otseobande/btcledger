@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Transaction;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -20,17 +21,56 @@ class TransactionController extends Controller
 
     public function index(Request $request)
     {
-        $transactions = Auth::user()->transactions()->orderBy('created_at', 'desc')->paginate();
+        $startDate = new Carbon($request->input('startDate', Carbon::now()->toDateString()));
+        $endDate = new Carbon($request->input('endDate', Carbon::now()->addDay()->toDateString()));
 
-        $sells = Auth::user()->transactions()->where('type', 'sell')->get()->map(function ($transaction) {
-          return $transaction->value;
-        })->sum();
+        if ($startDate == $endDate) {
+          $endDate = (new Carbon($startDate))->addDay();
+        }
 
-        $buys = Auth::user()->transactions()->where('type', 'buy')->get()->map(function ($transaction) {
-          return $transaction->value;
-        })->sum();
+        $transactions = Auth::user()
+          ->transactions()
+          // ->where('created_at','>=',$startDate)
+          // ->where('created_at','<=',$endDate)
+          ->whereBetween('created_at', [$startDate, $endDate])
+          // ->whereRaw('"transactions"."created_at" BETWEEN SYMMETRIC "?" AND "?"', [$startDate, $endDate])
+          ->orderBy('created_at', 'desc')->paginate();
+
+
+        $sellCollection = Auth::user()
+          ->transactions()
+          ->whereBetween('created_at', [$startDate, $endDate])
+          ->where('type', 'sell')
+          ->get();
+
+        $sells = $sellCollection->map(function ($transaction) {
+            return $transaction->value;
+          })
+          ->sum();
+
+        $soldBtc = $sellCollection->map(function ($transaction) {
+            return $transaction->quantity;
+          })
+          ->sum();
+
+        $buyCollection = Auth::user()
+          ->transactions()
+          ->whereBetween('created_at', [$startDate, $endDate])
+          ->where('type', 'buy')
+          ->get();
+
+        $buys = $buyCollection->map(function ($transaction) {
+            return $transaction->value;
+          })
+          ->sum();
+
+        $boughtBtc = $buyCollection->map(function ($transaction) {
+          return $transaction->quantity;
+        })
+        ->sum();
 
         $profit = $sells - $buys;
+        $btcAvailable = $boughtBtc - $soldBtc;
 
         if ($request->isMethod('post')) {
           $transaction = new Transaction();
@@ -45,7 +85,18 @@ class TransactionController extends Controller
           return back()->with('successMsg','Record saved succesfully!');
         }
 
-        return view('transaction', compact('transactions', 'profit', 'buys', 'sells'));
+        $startDate = $startDate->toDateString();
+        $endDate = $endDate->toDateString();
+
+        return view('transaction', compact(
+          'transactions',
+          'profit',
+          'buys',
+          'sells',
+          'startDate',
+          'endDate',
+          'btcAvailable'
+        ));
     }
 
     public function delete ($id) {

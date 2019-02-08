@@ -32,7 +32,8 @@ const app = new Vue({
     el: '#app',
     data: {
       rate: 0,
-      quantity: 0
+      quantity: 0,
+      startDate: document.querySelector("input[name=startDate]").value,
     },
     computed: {
       amount: {

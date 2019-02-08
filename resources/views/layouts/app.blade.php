@@ -75,6 +75,16 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <footer class="app-footer">
+          Powered by
+          <img
+            class="ml-1"
+            src="https://res.cloudinary.com/otse/image/upload/v1549583333/Obande_xqym3c.svg"
+            width="70"
+            alt="Obande"
+          >
+        </footer>
     </div>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
 </body>
 </html>
