@@ -116,7 +116,7 @@
                   @endforeach
                 </tbody>
               </table>
-              {{ $transactions->links() }}
+              {{ $transactions->appends(request()->query())->links() }}
             @else
               <div class="text-center" style="font-size: 20px;">No transaction found</div>
             @endif
