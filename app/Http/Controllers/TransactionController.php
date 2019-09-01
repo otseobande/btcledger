@@ -67,6 +67,16 @@ class TransactionController extends Controller
         })
         ->sum();
 
+        $averageBuyRate = $buyCollection->map(function ($transaction) {
+            return $transaction->rate;
+        })
+        ->average();
+
+        $averageSellRate = $sellCollection->map(function ($transaction) {
+            return $transaction->rate;
+        })
+        ->average();
+
         $profit = $sells - $buys;
         $btcAvailable = $boughtBtc - $soldBtc;
 
@@ -93,7 +103,11 @@ class TransactionController extends Controller
           'sells',
           'startDate',
           'endDate',
-          'btcAvailable'
+          'btcAvailable',
+          'boughtBtc',
+          'soldBtc',
+          'averageBuyRate',
+          'averageSellRate'
         ));
     }
 

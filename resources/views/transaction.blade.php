@@ -5,7 +5,7 @@
     @if(Session::has('successMsg'))
       <div class="alert alert-success"> {{ Session::get('successMsg') }}</div>
     @endif
-    <div class="row justify-content-between mb-3" style="text-align: center;">
+    <div class="row row-flex justify-content-between  mb-3" style="text-align: center;">
       <div class="col-md-3">
         <div class="card">
           <div class="card-body p-4">
@@ -17,16 +17,36 @@
       <div class="col-md-3">
         <div class="card">
           <div class="card-body p-4">
-            <h4>Total Sell Amount</h4>
-            &#8358;{{number_format($sells, 2)}}
+            <h4>Sells</h4>
+            <div style="text-align: left">
+                <div>
+                    <b>Amount:</b> &#8358;{{ number_format($sells, 2)}}
+                </div>
+                <div >
+                    <b>Quantity:</b> {{ number_format($soldBtc, 10)}} BTC
+                </div>
+                <div>
+                    <b>Average Rate:</b> &#8358;{{number_format($averageSellRate)}}
+                </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div class="card">
           <div class="card-body p-4">
-            <h4>Total Buy Amount</h4>
-            &#8358;{{number_format($buys, 2)}}
+            <h4>Buys</h4>
+            <div style="text-align: left">
+                <div>
+                    <b>Amount:</b> &#8358;{{number_format($buys, 2)}}
+                </div>
+                <div >
+                    <b>Quantity:</b> {{ number_format($boughtBtc, 10)}} BTC
+                </div>
+                <div>
+                    <b>Average Rate:</b> &#8358;{{number_format($averageBuyRate)}}
+                </div>
+            </div>
           </div>
         </div>
       </div>
@@ -78,7 +98,6 @@
                       />
                     </div>
                   </div>
-
                 </div>
                 <button type="submit" class="btn btn-primary">
                   Filter <i class="fa fa-filter"></i>
@@ -91,6 +110,8 @@
                 }}'>
                     Download <i class="fa fa-download"></i>
                 </a>
+
+
               </form>
             </div>
             @if($transactions->count() > 0)
