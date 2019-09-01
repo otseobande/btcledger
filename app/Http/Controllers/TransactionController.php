@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Exports\TransactionsExport;
 
 class TransactionController extends Controller
 {
@@ -30,10 +31,7 @@ class TransactionController extends Controller
 
         $transactions = Auth::user()
           ->transactions()
-          // ->where('created_at','>=',$startDate)
-          // ->where('created_at','<=',$endDate)
           ->whereBetween('created_at', [$startDate, $endDate])
-          // ->whereRaw('"transactions"."created_at" BETWEEN SYMMETRIC "?" AND "?"', [$startDate, $endDate])
           ->orderBy('created_at', 'desc')->paginate();
 
 
@@ -108,5 +106,17 @@ class TransactionController extends Controller
       $transaction->delete();
 
       return back()->with('successMsg','Record deleted successfully');
+    }
+
+    public function download (Request $request) {
+        $startDate = new Carbon($request->input('startDate', Carbon::now()->toDateString()));
+        $endDate = new Carbon($request->input('endDate', Carbon::now()->addDay()->toDateString()));
+
+        if ($startDate == $endDate) {
+          $endDate = (new Carbon($startDate))->addDay();
+        }
+
+        return (new TransactionsExport($startDate, $endDate))
+            ->download('transactions.xlsx');
     }
 }

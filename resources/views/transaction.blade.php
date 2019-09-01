@@ -83,6 +83,14 @@
                 <button type="submit" class="btn btn-primary">
                   Filter <i class="fa fa-filter"></i>
                 </button>
+                <a class="btn btn-secondary" href='{{
+                    '/transaction/download?startDate='.
+                    app('request')->input('startDate').
+                    '&endDate='.
+                    app('request')->input('endDate')
+                }}'>
+                    Download <i class="fa fa-download"></i>
+                </a>
               </form>
             </div>
             @if($transactions->count() > 0)
