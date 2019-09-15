@@ -67,12 +67,16 @@ class TransactionController extends Controller
         })
         ->sum();
 
-        $averageBuyRate = $buyCollection->map(function ($transaction) {
+        $averageBuyRate = $buyCollection->filter(function ($buyRecord) {
+            return $buyRecord->rate > 0;
+        })->map(function ($transaction) {
             return $transaction->rate;
         })
         ->average();
 
-        $averageSellRate = $sellCollection->map(function ($transaction) {
+        $averageSellRate = $sellCollection->filter(function ($sellRecord) {
+            return $sellRecord->rate > 0;
+        })->map(function ($transaction) {
             return $transaction->rate;
         })
         ->average();
