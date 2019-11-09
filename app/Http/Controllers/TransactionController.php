@@ -67,19 +67,8 @@ class TransactionController extends Controller
         })
         ->sum();
 
-        $averageBuyRate = $buyCollection->filter(function ($buyRecord) {
-            return $buyRecord->rate > 0;
-        })->map(function ($transaction) {
-            return $transaction->rate;
-        })
-        ->average();
-
-        $averageSellRate = $sellCollection->filter(function ($sellRecord) {
-            return $sellRecord->rate > 0;
-        })->map(function ($transaction) {
-            return $transaction->rate;
-        })
-        ->average();
+        $averageBuyCost = $buys / $boughtBtc;
+        $averageSellCost = $sells / $soldBtc;
 
         $profit = $sells - $buys;
         $btcAvailable = $boughtBtc - $soldBtc;
@@ -110,8 +99,8 @@ class TransactionController extends Controller
           'btcAvailable',
           'boughtBtc',
           'soldBtc',
-          'averageBuyRate',
-          'averageSellRate'
+          'averageBuyCost',
+          'averageSellCost'
         ));
     }
 
