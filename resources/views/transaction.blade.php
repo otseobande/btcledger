@@ -26,7 +26,7 @@
                     <b>Quantity:</b> {{ number_format($soldBtc, 10)}} BTC
                 </div>
                 <div>
-                    <b>Average cost:</b> &#8358;{{number_format($averageBuyCost)}}
+                    <b>Average cost:</b> &#8358;{{number_format($averageSellCost)}}
                 </div>
             </div>
           </div>
@@ -44,7 +44,7 @@
                     <b>Quantity:</b> {{ number_format($boughtBtc, 10)}} BTC
                 </div>
                 <div>
-                    <b>Average cost:</b> &#8358;{{number_format($averageSellCost)}}
+                    <b>Average cost:</b> &#8358;{{number_format($averageBuyCost)}}
                 </div>
             </div>
           </div>
