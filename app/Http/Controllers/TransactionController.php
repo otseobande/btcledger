@@ -67,8 +67,8 @@ class TransactionController extends Controller
         })
         ->sum();
 
-        $averageBuyCost = $buys / $boughtBtc;
-        $averageSellCost = $sells / $soldBtc;
+        $averageBuyCost = $boughtBtc === 0 ? 0 : $buys / $boughtBtc;
+        $averageSellCost = $soldBtc === 0 ? 0 : $sells / $soldBtc;
 
         $profit = $sells - $buys;
         $btcAvailable = $boughtBtc - $soldBtc;
